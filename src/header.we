@@ -1,0 +1,21 @@
+<template>
+    <div class="page-head">
+        <img class="logo" src="https://www.greendot.com/assets/flexwebcore/dist/img/logo-greendot-white.svg"></img>
+    </div>
+</template>
+<style>
+    .page-head {
+        align-items: center;
+        padding-top: 50;
+        padding-bottom: 50;
+        padding-left: 50;
+        padding-right: 50;
+        justify-content: center;
+    }
+    .logo {
+        flex: 1;
+        width: 400; 
+        height: 200;
+        margin-left: 220;
+    }
+</style>
