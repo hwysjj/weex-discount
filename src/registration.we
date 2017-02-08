@@ -105,10 +105,10 @@
           self.error = null;
           stream.fetch({
             method: 'POST',
-            url: 'https://http://139.224.55.211/auth/account/register',
+            url: 'https://139.224.55.211/auth/account/register',
             type:'json',
             body: JSON.stringify({userName: self.email}),
-            header: {'Content-Yype': 'application/json'}
+            headers: {'Content-Type': 'application/json'},
           }, res => {
             if (!res.ok) {  
               self.error = "request failed";
@@ -120,6 +120,8 @@
 
               });
             }
+         }, () => {
+           
          });
         }
       }
