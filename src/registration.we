@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <div style="z-index:1000">
-        <wxc-navpage background-color="#4FC143" title="Login" title-color="#ffffff">
+        <wxc-navpage background-color="#4FC143" title="Registration" title-color="#ffffff">
         </wxc-navpage>
     </div>
     <div class="page-body">
@@ -75,12 +75,13 @@
       firstName: null,
       lastName: '',
       registrationSrc: null,
-      error: null
+      error: null,
+      base: null
     },
     created() {
       let bundleUrl = this.$getConfig().bundleUrl;
-      let base = helper.getBaseUrl(bundleUrl);
-      this.registrationSrc = base + 'registration.js';
+      this.base = helper.getBaseUrl(bundleUrl, true);
+      this.registrationSrc = this.base + 'registration.js';
     },
     computed: {
       email: {
@@ -111,18 +112,17 @@
             headers: {'Content-Type': 'application/json'},
           }, res => {
             if (!res.ok) {  
-              self.error = "request failed";
+              self.error = 'Request failed';
             } else {
               let params = {
+                'url': this.base + 'registration-success.js',
                 'animated' : 'true',
               }
-              navigator.pop(params, () => {
+              navigator.push(params, () => {
 
               });
             }
-         }, () => {
-           
-         });
+          }, () => {});
         }
       }
     }
