@@ -24,7 +24,7 @@
       </div>
       <div class="btn-area">
         <div class="section">
-          <wxc-button class="button" type="success" size="large" onclick="submit" value="Sign Up"></wxc-button>
+          <wxc-button class="button" type="success" size="large" onclick="submit" value="Login"></wxc-button>
         </div>
         <div class="section">
           <a href="{{registrationSrc}}">
@@ -63,9 +63,6 @@
   .email-text, .link-text {
     opacity: 0.4;
   }
-  .btn-area {
-    margin-top: 150;
-  }
   .button {
     flex: 1;
   }
@@ -78,18 +75,22 @@
   require('weex-components');
   const helper = require('./common/helper');
   const errors = require('./common/errors');
+  const stream = require('@weex-module/stream');
+  const navigator = require('@weex-module/navigator');
+  const modal = require('@weex-module/modal');  
   module.exports = {
     data: {
       firstName: null,
       lastName: '',
       registrationSrc: null,
       password: null,
-      error: null
+      error: null,
+      base: null
     },
     created() {
       let bundleUrl = this.$getConfig().bundleUrl;
-      let base = helper.getBaseUrl(bundleUrl, true);
-      this.registrationSrc = base + 'registration.js';
+      this.base = helper.getBaseUrl(bundleUrl, true);
+      this.registrationSrc = this.base + 'registration.js';
     },
     computed: {
       email: {
@@ -118,6 +119,30 @@
           return;
         } else {
           self.error = null;
+          let req = `grant_type=password&username=${encodeURI(self.email)}&password=${encodeURI(self.password)}&client_id=consoleApp&client_secret=123%40abc`;
+          stream.fetch({
+            method: 'POST',
+            url: 'https://139.224.55.211/auth/token',
+            type:'json',
+            body: req,
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+              'Accept': 'application/json'
+            },
+          }, res => {
+            if (!res.ok) {  
+              self.error = 'Login failed, please check your inputs and try again';
+            } else {
+              let url = res.data.emailConfirmed ? 'dashboard.js' : 'first-login-modal.js'
+              let params = {
+                'url': this.base + url,
+                'animated' : 'true',
+              }
+              navigator.push(params, () => {
+
+              });
+            }
+          }, () => {});
         }
       }
     }

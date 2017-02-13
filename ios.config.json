@@ -1,9 +1,9 @@
 {
-   "AppName":"WeexApp",
-   "Version":"0.1",
-   "BuildVersion":"0.1.0",
-   "AppId":"",
-   "CodeSign":"",
-   "Profile":"",
-   "WeexBundle":"index.js"
+    "AppName": "WeexApp",
+    "Version": "0.1",
+    "BuildVersion": "0.1.0",
+    "AppId": "com.examples.William.HackerNews",
+    "CodeSign": "iOS Developer: 文益 华 (文益 华)",
+    "Profile": "9fd2722a-a7cf-483e-bfdb-7aa0e4c781f2",
+    "WeexBundle": "index.js"
 }

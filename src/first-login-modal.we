@@ -1,0 +1,55 @@
+<template>
+    <div class="wrapper">
+        <div style="z-index:1000">
+            <wxc-navpage background-color="#4FC143" title="Waiting" title-color="#ffffff">
+            </wxc-navpage>
+        </div>
+        <div class="page-body">
+            <text class="text">You need to update your password immediately to continue using the service.</text>
+            <text class="text">Going to Change Password screen in {{seconds}} second(s).</text>
+        </div>
+    </div>
+</template>
+<style>
+  .page-body {
+    margin-top: 190;
+    padding-left: 30;
+    padding-right: 30;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .text {
+    margin-bottom: 50;
+    font-size: 40;
+  }
+</style>
+<script>
+  require('weex-components');
+  const navigator = require('@weex-module/navigator');
+  const helper = require('./common/helper');
+  module.exports = {
+    data: {
+      seconds: 3,
+      base: null
+    },
+    created() {
+      let self = this;
+      let bundleUrl = this.$getConfig().bundleUrl;
+      this.base = helper.getBaseUrl(bundleUrl, true);
+      let interval;
+      interval = setInterval(function () {
+        if (--self.seconds === 0) {
+            clearInterval(interval);
+            let params = {
+                'url': self.base + 'change-password.js',
+                'animated' : 'true',
+            }
+            navigator.push(params, () => {
+
+            });
+        }
+
+      }, 1000);
+    }
+  }
+</script>

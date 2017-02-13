@@ -19,7 +19,7 @@
         </div>
         <div class="btn-area">
             <div class="section">
-            <wxc-button class="button" type="success" size="large" onclick="submit" value="Send"></wxc-button>
+            <wxc-button class="button" type="success" disabled="{{true}}" size="large" onclick="submit" value="Send"></wxc-button>
             </div>
         </div>
     </div>

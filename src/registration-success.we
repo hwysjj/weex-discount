@@ -1,13 +1,13 @@
 <template>
     <div class="wrapper">
         <div style="z-index:1000">
-            <wxc-navpage background-color="#4FC143" title="Registration" title-color="#ffffff">
+            <wxc-navpage background-color="#4FC143" title="Sent" title-color="#ffffff">
             </wxc-navpage>
         </div>
         <div class="page-body">
             <header></header>
             <div class="section">
-                <text>Please check you Green Dot email and login with the information provided there.</text>
+                <text class="text">Please check you Green Dot email and login with the information provided there.</text>
             </div>
             <div class="btn-area">
                 <div class="section">
@@ -32,7 +32,7 @@
   .btn-area {
     margin-top: 150;
   }
-  .button {
+  .button, .text {
     flex: 1;
   }
   .btn-area {

@@ -1,0 +1,23 @@
+<template>
+    <div class="wrapper">
+        <div style="z-index:1000">
+            <wxc-navpage background-color="#4FC143" title="Dashboard" title-color="#ffffff">
+            </wxc-navpage>
+        </div>
+        <div class="page-body">
+            <text>Comming Soon...</text>
+        </div>
+    </div>
+</template>
+<style>
+    .page-body {
+        margin-top: 90;
+        padding-left: 30;
+        padding-right: 30;
+    }
+</style>
+<script>
+  require('weex-components');
+  module.exports = {
+  }
+</script>

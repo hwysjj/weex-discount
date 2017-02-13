@@ -1,4 +1,5 @@
 exports.EmailReg = /^([A-Za-z\d]+)\.([A-Za-z\d]+)@greendotcorp.com$/;
+exports.PasswordReg = /^[A-Za-z0-9!@#$*.+-_]{5,20}$/;
 exports.getBaseUrl = function (bundleUrl, isnav) {
     bundleUrl = new String(bundleUrl);
     var nativeBase;
