@@ -1,34 +1,29 @@
 <template>
-  <div class="wrapper">
-    <div style="z-index:1000">
-        <wxc-navpage background-color="#4FC143" title="Registration" title-color="#ffffff">
-        </wxc-navpage>
-    </div>
+  <wxc-navpage background-color="#4FC143" title="Registration" title-color="#ffffff">
     <div class="page-body">
-        <header></header>
-        <wxc-tip type="danger" if="{{error}}" value="{{error}}"></wxc-tip>      
-        <div class="section">
-            <div class="input-container">
-                <input class="input" type="text" oninput="onFNameInput" placeholder="first name">
-            </div>
-            <text>.</text>
-            <div class="input-container">
-                <input class="input" type="text" oninput="onLNameInput" placeholder="last name">
-            </div>
-            <text class="email-text">@greendotcorp.com</text>
-        </div>
-        <div class="btn-area">
-            <div class="section">
-            <wxc-button class="button" type="success" disabled="{{true}}" size="large" onclick="submit" value="Send"></wxc-button>
-            </div>
-        </div>
+      <header></header>
+      <wxc-tip type="danger" if="{{error}}" value="{{error}}"></wxc-tip>      
+      <div class="section">
+          <div class="input-container">
+              <input class="input" type="text" oninput="onFNameInput" placeholder="first name">
+          </div>
+          <text>.</text>
+          <div class="input-container">
+              <input class="input" type="text" oninput="onLNameInput" placeholder="last name">
+          </div>
+          <text class="email-text">@greendotcorp.com</text>
+      </div>
+      <div class="btn-area">
+          <div class="section">
+          <wxc-button class="button" type="success" disabled="{{true}}" size="large" onclick="submit" value="Send"></wxc-button>
+          </div>
+      </div>
     </div>
-  </div>
+  </wxc-navpage>
 </template>
 
 <style>
   .page-body {
-    margin-top: 90;
     padding-left: 30;
     padding-right: 30;
   }

@@ -1,18 +1,14 @@
 <template>
-    <div class="wrapper">
-        <div style="z-index:1000">
-            <wxc-navpage background-color="#4FC143" title="Waiting" title-color="#ffffff">
-            </wxc-navpage>
-        </div>
-        <div class="page-body">
-            <text class="text">You need to update your password immediately to continue using the service.</text>
-            <text class="text">Going to Change Password screen in {{seconds}} second(s).</text>
-        </div>
+  <wxc-navpage background-color="#4FC143" title="Waiting" title-color="#ffffff">
+    <div class="page-body">
+      <text class="text">You need to update your password immediately to continue using the service.</text>
+      <text class="text">Going to Change Password screen in {{seconds}} second(s).</text>
     </div>
+  </wxc-navpage>
 </template>
 <style>
   .page-body {
-    margin-top: 190;
+    margin-top: 100;
     padding-left: 30;
     padding-right: 30;
     flex-direction: column;

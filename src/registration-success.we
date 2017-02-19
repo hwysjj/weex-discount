@@ -1,25 +1,20 @@
 <template>
-    <div class="wrapper">
-        <div style="z-index:1000">
-            <wxc-navpage background-color="#4FC143" title="Sent" title-color="#ffffff">
-            </wxc-navpage>
-        </div>
-        <div class="page-body">
-            <header></header>
-            <div class="section">
-                <text class="text">Please check you Green Dot email and login with the information provided there.</text>
-            </div>
-            <div class="btn-area">
-                <div class="section">
-                    <wxc-button class="button" type="success" size="large" onclick="submit" value="Click Here to Login"></wxc-button>
-                </div>
-            </div>
-        </div>
+  <wxc-navpage background-color="#4FC143" title="Sent" title-color="#ffffff">
+    <div class="page-body">
+      <header></header>
+      <div class="section">
+          <text class="text">Please check you Green Dot email and login with the information provided there.</text>
+      </div>
+      <div class="btn-area">
+          <div class="section">
+              <wxc-button class="button" type="success" size="large" onclick="submit" value="Click Here to Login"></wxc-button>
+          </div>
+      </div>
     </div>
+  </wxc-navpage>
 </template>
 <style>
   .page-body {
-    margin-top: 90;
     padding-left: 30;
     padding-right: 30;
   }
