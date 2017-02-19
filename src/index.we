@@ -75,9 +75,10 @@
   require('weex-components');
   const helper = require('./common/helper');
   const errors = require('./common/errors');
-  const stream = require('@weex-module/stream');
   const navigator = require('@weex-module/navigator');
-  const modal = require('@weex-module/modal');  
+  const modal = require('@weex-module/modal');
+  const api = require('./common/services');  
+  const storage = require('@weex-module/storage');
   module.exports = {
     data: {
       firstName: null,
@@ -119,30 +120,27 @@
           return;
         } else {
           self.error = null;
-          let req = `grant_type=password&username=${encodeURI(self.email)}&password=${encodeURI(self.password)}&client_id=consoleApp&client_secret=123%40abc`;
-          stream.fetch({
-            method: 'POST',
-            url: 'https://139.224.55.211/auth/token',
-            type:'json',
-            body: req,
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',
-              'Accept': 'application/json'
-            },
-          }, res => {
-            if (!res.ok) {  
-              self.error = 'Login failed, please check your inputs and try again';
-            } else {
-              let url = res.data.emailConfirmed ? 'dashboard.js' : 'first-login-modal.js'
+          api.login(self.email, self.password)
+            .then(res => {
+              let url = res.data.emailConfirmed === 'True' ? 'dashboard.js' : 'first-login-modal.js'
               let params = {
                 'url': this.base + url,
                 'animated' : 'true',
               }
-              navigator.push(params, () => {
-
+              let authorizationData = { 
+                token: res.data.access_token, 
+                userName: res.data.userName, 
+                refreshToken: res.data.refresh_token, 
+              }
+              storage.setItem('authorizationData', JSON.stringify(authorizationData), e => {
+                var i= 0;
+                console.log('sss'+JSON.stringify(e));
+                navigator.push(params, () => {});
               });
-            }
-          }, () => {});
+            })
+            .catch(res => {
+              self.error = 'Login failed, please check your inputs and try again';
+            });
         }
       }
     }
