@@ -121,14 +121,13 @@
               let params = {
                 'url': this.base + url,
                 'animated' : 'true',
-              }
+              };
               let authorizationData = { 
                 token: res.data.access_token, 
                 userName: res.data.userName, 
                 refreshToken: res.data.refresh_token, 
-              }
+              };
               storage.setItem('authorizationData', JSON.stringify(authorizationData), e => {
-                var i= 0;
                 console.log('sss'+JSON.stringify(e));
                 navigator.push(params, () => {});
               });

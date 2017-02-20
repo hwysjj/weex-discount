@@ -1,6 +1,5 @@
 <template>
-    <div class="wrapper">
-        <wxc-navpage background-color="#4FC143" left-item-src="http://gtms02.alicdn.com/tps/i2/TB1ED7iMpXXXXXEXXXXWA_BHXXX-48-48.png" title="Dashboard" right-item-title="{{userName}}" right-item-color="#ffffff" title-color="#ffffff">
+    <wxc-navpage background-color="#4FC143" left-item-src="http://gtms02.alicdn.com/tps/i2/TB1ED7iMpXXXXXEXXXXWA_BHXXX-48-48.png" title="Dashboard" right-item-title="{{userName}}" right-item-color="#ffffff" title-color="#ffffff">
         <wxc-panel title="Remaining Coupon">
             <div class="summary">
                 <div class="numbers">
@@ -11,7 +10,7 @@
                 </div>
             </div>
             <list>
-                <cell onappear="onappear" ondisappear="ondisappear" repeat="{{coupons}}" index="{{$index}}">
+                <cell repeat="{{coupons}}" index="{{$index}}">
                     <div class="item">
                         <div class="coupon-image">
                             <image class="image-style" src="{{image}}"></image>
@@ -27,8 +26,7 @@
                 </cell>
             </list>
         </wxc-panel>
-        </wxc-navpage> 
-    </div>
+    </wxc-navpage> 
 </template>
 <style>
     .numbers, .scan-to-pay {
@@ -79,7 +77,7 @@
   const storage = require('@weex-module/storage');
   module.exports = {
     data: {
-        userName: null,
+        userName: '',
         numbers: 12,
         coupons: null
     },
@@ -87,35 +85,32 @@
         storage.getItem('authorizationData', e => {
             if (e.data) {
                 this.userName = JSON.parse(e.data).userName.split('.')[0];
-                this.coupons = [{
-                    title: 'KFC',
-                    description: 'APDERESS',
-                    image: null
-                }, {
-                    title: 'KFC',
-                    description: 'APDERESS',
-                    image: null
-                }, {
-                    title: 'KFC',
-                    description: 'APDERESS',
-                    image: null
-                }, {
-                    title: 'KFC',
-                    description: 'APDERESS',
-                    image: null
-                }, {
-                    title: 'KFC',
-                    description: 'APDERESS',
-                    image: null
-                }];
             }
         });
+        this.coupons = [{
+            title: 'KFC',
+            description: 'APDERESS',
+            image: 'http://gtms02.alicdn.com/tps/i2/TB1ED7iMpXXXXXEXXXXWA_BHXXX-48-48.png'
+        }, {
+            title: 'KFC',
+            description: 'APDERESS',
+            image: 'http://gtms02.alicdn.com/tps/i2/TB1ED7iMpXXXXXEXXXXWA_BHXXX-48-48.png'
+        }, {
+            title: 'KFC',
+            description: 'APDERESS',
+            image: 'http://gtms02.alicdn.com/tps/i2/TB1ED7iMpXXXXXEXXXXWA_BHXXX-48-48.png'
+        }, {
+            title: 'KFC',
+            description: 'APDERESS',
+            image: 'http://gtms02.alicdn.com/tps/i2/TB1ED7iMpXXXXXEXXXXWA_BHXXX-48-48.png'
+        }, {
+            title: 'KFC',
+            description: 'APDERESS',
+            image: 'http://gtms02.alicdn.com/tps/i2/TB1ED7iMpXXXXXEXXXXWA_BHXXX-48-48.png'
+        }];
     },
     methods: {
-        onappear: function (e) {
-            var index = e.target.attr.index
-        },
-        ondisappear:function (e) {
+        submit() {
 
         }
     }

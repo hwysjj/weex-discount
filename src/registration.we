@@ -101,7 +101,7 @@
           self.error = null;
           stream.fetch({
             method: 'POST',
-            url: 'https://139.224.55.211/auth/account/register',
+            url: 'http://139.224.55.211:8000/auth/account/register',
             type:'json',
             body: JSON.stringify({userName: self.email}),
             headers: {'Content-Type': 'application/json'},

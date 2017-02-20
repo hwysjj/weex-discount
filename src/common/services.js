@@ -14,7 +14,7 @@ let request = (options) => {
     });
 }
 let apiURL = {
-    baseurl: 'https://139.224.55.211',
+    baseurl: 'http://139.224.55.211:8000',
     login: '/auth/token',
     changePassword: '/auth/account/changepassword'
 };
