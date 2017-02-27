@@ -1,5 +1,5 @@
 <template>
-  <wxc-navpage background-color="#4FC143" title="Registration" title-color="#ffffff">
+  <wxc-navpage left-item-title="<" left-item-color="#ffffff" background-color="#4FC143" title="Registration" title-color="#ffffff">
     <div class="page-body">
       <header></header>
       <wxc-tip type="danger" if="{{error}}" value="{{error}}"></wxc-tip>      
@@ -15,8 +15,9 @@
       </div>
       <div class="btn-area">
           <div class="section">
-          <wxc-button class="button" type="success" disabled="{{true}}" size="large" onclick="submit" value="Send"></wxc-button>
+            <wxc-button class="button" type="success" disabled="{{true}}" size="large" onclick="submit" value="Send"></wxc-button>
           </div>
+        </div>
       </div>
     </div>
   </wxc-navpage>
@@ -69,14 +70,15 @@
     data: {
       firstName: null,
       lastName: '',
-      registrationSrc: null,
       error: null,
-      base: null
+      base: null,
     },
     created() {
       let bundleUrl = this.$getConfig().bundleUrl;
       this.base = helper.getBaseUrl(bundleUrl, true);
-      this.registrationSrc = this.base + 'registration.js';
+      this.$on('naviBar.leftItem.click', e => {
+          navigator.pop({'animated' : 'true'}, () => {});
+      });
     },
     computed: {
       email: {

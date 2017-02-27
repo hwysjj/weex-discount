@@ -1,6 +1,6 @@
 <template>
     <div class="page-head">
-        <img class="logo" src="https://www.greendot.com/assets/flexwebcore/dist/img/logo-greendot-white.svg"></img>
+        <img class="logo" src="https://raw.githubusercontent.com/hwysjj/weex-discount/master/src/images/GreenDot_Shanghai-Logo.png"></img>
     </div>
 </template>
 <style>
@@ -14,8 +14,7 @@
     }
     .logo {
         flex: 1;
-        width: 400; 
-        height: 200;
-        margin-left: 220;
+        width: 500; 
+        height: 130;
     }
 </style>

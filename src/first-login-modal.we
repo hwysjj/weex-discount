@@ -1,10 +1,12 @@
 <template>
-  <wxc-navpage background-color="#4FC143" title="Waiting" title-color="#ffffff">
-    <div class="page-body">
-      <text class="text">You need to update your password immediately to continue using the service.</text>
-      <text class="text">Going to Change Password screen in {{seconds}} second(s).</text>
-    </div>
-  </wxc-navpage>
+  <div style="font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;">
+    <wxc-navpage background-color="#4FC143" title="Waiting" title-color="#ffffff">
+      <div class="page-body">
+        <text class="text">You need to update your password immediately to continue using the service.</text>
+        <text class="text">Going to Change Password screen in {{seconds}} second(s).</text>
+      </div>
+    </wxc-navpage>
+  </div>
 </template>
 <style>
   .page-body {

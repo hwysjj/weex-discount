@@ -1,0 +1,129 @@
+<template>
+    <div style="font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;">
+        <wxc-navpage background-color="#4FC143" left-item-title="<" left-item-color="#ffffff" title="Coupon Detail" title-color="#ffffff">
+            <div>
+                <slider class="slider" auto-play="false">
+                    <div class="slider-pages" repeat="item in couponPages">
+                        <text class="title">{{item.title}}</text>
+                        <scroller class="scroller">
+                            <list>
+                                <cell class="cell" repeat="{{item.coupons}}" index="{{$index}}">
+                                    <div class="ammount-container">
+                                        <text class="symbol">￥</text>
+                                        <text class="amount">{{amount}}</text>
+                                    </div>
+                                    <div class="coupon-expiration">
+                                        <text>From: {{fromDate}}</text>
+                                        <text>To  : {{toDate}}</text>
+                                    </div>
+                                </cell>
+                            </list>
+                        </scroller>
+                    </div>
+                    <indicator class="indicator"></indicator>
+                </slider>
+            </div>
+        </wxc-navpage>
+    </div>
+</template>
+<style>
+    .slider-pages {
+       
+        height: 800;
+    }
+    .slider {
+        margin-top: 100;
+        height: 1000;
+        
+    }
+    .indicator {
+        item-color: #c0c0c0;
+        item-selectedColor: #4FC143;
+        item-size: 20;
+    }
+    .scroller {
+        flex: 1;
+    }
+    .cell {
+        flex-direction: row;
+    }
+    .ammount-container {
+        flex: 1;
+        flex-direction: row;
+    }
+    .coupon-expiration {
+        flex: 1;
+        flex-direction: row;
+    }
+</style>
+<script>
+    require('weex-components');
+    const helper = require('./common/helper');
+    const storage = require('@weex-module/storage');
+    const navigator = require('@weex-module/navigator');
+    module.exports = {
+        data: {
+            couponPages: [],
+            deviceWidth: 0,
+            deviceHeight: 0
+        },
+        created() {
+            let bundleUrl = this.$getConfig().bundleUrl;
+            let base = helper.getBaseUrl(bundleUrl, true);
+            this.deviceWidth = this.$getConfig().env.deviceWidth;
+            this.deviceHeight = this.$getConfig().env.deviceHeight;
+            
+            this.couponPages = [{
+                title: 'Remaining Coupons',
+                coupons: [{
+                    amount: 10,
+                    fromDate: '2017/2/12 10:00',
+                    toDate: '2017/2/12 10:00'
+                }, {
+                    amount: 10,
+                    fromDate: '2017/2/12 10:00',
+                    toDate: '2017/2/12 10:00'
+                }, {
+                    amount: 10,
+                    fromDate: '2017/2/12 10:00',
+                    toDate: '2017/2/12 10:00'
+                }, {
+                    amount: 10,
+                    fromDate: '2017/2/12 10:00',
+                    toDate: '2017/2/12 10:00'
+                }, {
+                    amount: 10,
+                    fromDate: '2017/2/12 10:00',
+                    toDate: '2017/2/12 10:00'
+                }]
+            }, {
+                title: 'Used Coupons',
+                coupons: [{
+                    amount: 10,
+                    fromDate: '2017/2/12 10:00',
+                    toDate: '2017/2/12 10:00'
+                }, {
+                    amount: 10,
+                    fromDate: '2017/2/12 10:00',
+                    toDate: '2017/2/12 10:00'
+                }, {
+                    amount: 10,
+                    fromDate: '2017/2/12 10:00',
+                    toDate: '2017/2/12 10:00'
+                }, {
+                    amount: 10,
+                    fromDate: '2017/2/12 10:00',
+                    toDate: '2017/2/12 10:00'
+                }, {
+                    amount: 10,
+                    fromDate: '2017/2/12 10:00',
+                    toDate: '2017/2/12 10:00'
+                }]
+            }];
+
+            this.$on('naviBar.leftItem.click', e => {
+                navigator.pop({'animated' : 'true'}, () => {});
+            });
+        }
+    };
+</script>

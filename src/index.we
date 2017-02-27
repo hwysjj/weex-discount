@@ -1,142 +1,184 @@
 <template>
-  <wxc-navpage background-color="#4FC143" title="Login" title-color="#ffffff">
-    <div class="page-body">
-      <header></header>
-      <wxc-tip type="danger" if="{{error}}" value="{{error}}"></wxc-tip>      
-      <div class="section">
-          <div class="input-container">
-            <input class="input" type="text" oninput="onFNameInput" placeholder="first name">
-          </div>
-          <text>.</text>
-          <div class="input-container">
-            <input class="input" type="text" oninput="onLNameInput" placeholder="last name">
-          </div>
-          <text class="email-text">@greendotcorp.com</text>
-      </div>
-      <div class="section">
-        <div class="input-container">
-          <input class="input" type="password" oninput="onPassInput" placeholder="password">
+    <div style="font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;">
+        <div class="dashboard-header">
+            <image class="logo" src="https://raw.githubusercontent.com/hwysjj/weex-discount/master/src/images/GreenDot_Shanghai-Logo-small.png"></image>
+            <div>
+                <text class="user-name" onclick="accountSetting">{{userName}}</text>
+            </div>
         </div>
-      </div>
-      <div class="btn-area">
-        <div class="section">
-          <wxc-button class="button" type="success" size="large" onclick="submit" value="Login"></wxc-button>
+        <div class="hero">
+            <a href="{{couponDetailUrl}}">
+                <text class="numbers">{{numbers}}</text>
+            </a>
+            <div class="header-text-container">
+                <text class="hero-text">Remaining Coupons</text>
+            </div>
         </div>
-        <div class="section">
-          <a href="{{registrationSrc}}">
-            <text class="link-text">Registration</text>
-          </a>
+        <div>
+            <list>
+                <cell repeat="{{merchants}}" index="{{$index}}">
+                    <div class="item">
+                        <image class="merchant-image" src="{{image}}"></image>
+                        <div class="merchant-detail">
+                            <text class="merchant-name">{{title}}</text>
+                            <text class="merchant-position">{{description}}</text>
+                        </div>
+                        <div class="pay">
+                            <text class="pay-text">pay</text>
+                        </div>
+                    </div>
+                </cell>
+            </list>
         </div>
-      </div>
     </div>
-  </wxc-navpage>
 </template>
-
 <style>
-  .page-body {
-    padding-left: 30;
-    padding-right: 30;
-  }
-  .section {
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 30;
-  }
-  .input {
-    padding-left: 30;
-    padding-right: 30;
-    height: 80;
-    font-size: 30;
-  }
-  .input-container {
-    border-bottom-width: 1;
-    border-bottom-color: #dddddd;
-    border-bottom-style: solid;
-    flex: 1;
-  }
-  .email-text, .link-text {
-    opacity: 0.4;
-  }
-  .button {
-    flex: 1;
-  }
-  .btn-area {
-    margin-top: 60;
-  }
+    .dashboard-header {
+        height: 90;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding-left: 10;
+        padding-right: 10;
+    }
+    .user-name {
+        color: #4FC143;
+        font-size: 50;
+        font-weight: 600;
+    }
+    .logo {
+        width: 350;
+        height: 90;
+    }
+    .hero {
+        background-color: #4FC143;
+        justify-content: center;
+        align-items: center;
+        height: 340;
+    }
+    .numbers {
+        font-size: 180;
+        font-weight: 600;
+        color: #fff;
+    }
+    .hero-text {
+        font-size: 40;
+        color: #fff;
+    }
+    .header-text-container {
+        width: 400;
+        border-top-width: 6;
+        border-top-color: #ffffff;
+        text-align: center;
+    }
+    .summary {
+        flex-direction: row;
+        height: 300
+    }
+    .item {
+        flex-direction: row;
+        border-bottom-width: 6;
+        border-bottom-color: #c0c0c0;
+        height: 180;
+        align-items: center;
+    }
+    .merchant-detail {
+        flex: 1;
+    }
+    .merchant-name {
+        flex: 1;
+        font-size: 40;
+        color: #000000;
+        margin-bottom: 20;
+    }
+    .merchant-position {
+        flex: 1;
+        font-size: 40;
+        color: #c0c0c0;
+    }
+    .pay {
+        margin-right: 60;
+        border-bottom-width: 2;
+        border-bottom-color: #c0c0c0;
+    }
+    .pay-text {
+        font-size: 50;
+        color: #c0c0c0;
+        
+    }
+    .merchant-image {
+        width: 200;
+        height: 150;
+        background-color: red;
+        margin-right: 20;
+    }
 </style>
-
 <script>
   require('weex-components');
   const helper = require('./common/helper');
-  const errors = require('./common/errors');
-  const navigator = require('@weex-module/navigator');
-  const modal = require('@weex-module/modal');
-  const api = require('./common/services');  
   const storage = require('@weex-module/storage');
+  const navigator = require('@weex-module/navigator');
   module.exports = {
     data: {
-      firstName: null,
-      lastName: '',
-      registrationSrc: null,
-      password: null,
-      error: null,
-      base: null
+        userName: '',
+        numbers: 12,
+        merchants: null,
+        couponDetailUrl: '',
+        base: ''
     },
     created() {
-      let bundleUrl = this.$getConfig().bundleUrl;
-      this.base = helper.getBaseUrl(bundleUrl, true);
-      this.registrationSrc = this.base + 'registration.js';
-    },
-    computed: {
-      email: {
-        get() {
-          return `${this.firstName}.${this.lastName}@greendotcorp.com`;
-        }
-      }
+        let bundleUrl = this.$getConfig().bundleUrl;
+        this.base = helper.getBaseUrl(bundleUrl, true);
+        storage.getItem('authorizationData', e => {
+            if (e.data !== 'undefined') {
+                this.userName = JSON.parse(e.data).userName.split('.')[0];
+                this.couponDetailUrl = this.base + 'coupon-detail.js'
+            } else {
+                let params = {
+                    'url': this.base + 'login.js',
+                    'animated' : 'true',
+                };
+                navigator.push(params, () => {});
+            }
+        });
+        this.merchants = [{
+            title: 'KFC',
+            description: 'APDERESS',
+            image: 'http://gtms02.alicdn.com/tps/i2/TB1ED7iMpXXXXXEXXXXWA_BHXXX-48-48.png'
+        }, {
+            title: 'KFC',
+            description: 'APDERESS',
+            image: 'http://gtms02.alicdn.com/tps/i2/TB1ED7iMpXXXXXEXXXXWA_BHXXX-48-48.png'
+        }, {
+            title: 'KFC',
+            description: 'APDERESS',
+            image: 'http://gtms02.alicdn.com/tps/i2/TB1ED7iMpXXXXXEXXXXWA_BHXXX-48-48.png'
+        }, {
+            title: 'KFC',
+            description: 'APDERESS',
+            image: 'http://gtms02.alicdn.com/tps/i2/TB1ED7iMpXXXXXEXXXXWA_BHXXX-48-48.png'
+        }, {
+            title: 'KFC',
+            description: 'APDERESS',
+            image: 'http://gtms02.alicdn.com/tps/i2/TB1ED7iMpXXXXXEXXXXWA_BHXXX-48-48.png'
+        }, {
+            title: 'KFC',
+            description: 'APDERESS',
+            image: 'http://gtms02.alicdn.com/tps/i2/TB1ED7iMpXXXXXEXXXXWA_BHXXX-48-48.png'
+        }];
     },
     methods: {
-      onFNameInput(event) {
-        this.firstName = event.value;
-      },
-      onLNameInput(event) {
-        this.lastName = event.value;
-      },
-      onPassInput(event) {
-        this.password = event.value;
-      },
-      submit() {
-        let self = this;
-        if (!helper.EmailReg.test(self.email)) {
-          self.error = errors.error.Name_Invalid;
-          return;
-        } else if (!self.password) {
-          self.error = errors.error.Password_Required;
-          return;
-        } else {
-          self.error = null;
-          api.login(self.email, self.password)
-            .then(res => {
-              let url = res.data.emailConfirmed === 'True' ? 'dashboard.js' : 'first-login-modal.js'
-              let params = {
-                'url': this.base + url,
+        accountSetting() {
+            let params = {
+                'url': this.base + 'login.js',
                 'animated' : 'true',
-              };
-              let authorizationData = { 
-                token: res.data.access_token, 
-                userName: res.data.userName, 
-                refreshToken: res.data.refresh_token, 
-              };
-              storage.setItem('authorizationData', JSON.stringify(authorizationData), e => {
-                console.log('sss'+JSON.stringify(e));
+            };
+            // logout;
+            storage.removeItem('authorizationData', e => {
                 navigator.push(params, () => {});
-              });
-            })
-            .catch(res => {
-              self.error = 'Login failed, please check your inputs and try again';
             });
+            
         }
-      }
     }
   }
 </script>

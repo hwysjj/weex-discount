@@ -1,17 +1,19 @@
 <template>
-  <wxc-navpage background-color="#4FC143" title="Sent" title-color="#ffffff">
-    <div class="page-body">
-      <header></header>
-      <div class="section">
-          <text class="text">Please check you Green Dot email and login with the information provided there.</text>
+  <div style="font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;">
+    <wxc-navpage background-color="#4FC143" title="Sent" title-color="#ffffff">
+      <div class="page-body">
+        <header></header>
+        <div class="section">
+            <text class="text">Please check you Green Dot email and login with the information provided there.</text>
+        </div>
+        <div class="btn-area">
+            <div class="section">
+                <wxc-button class="button" type="success" size="large" onclick="submit" value="Click Here to Login"></wxc-button>
+            </div>
+        </div>
       </div>
-      <div class="btn-area">
-          <div class="section">
-              <wxc-button class="button" type="success" size="large" onclick="submit" value="Click Here to Login"></wxc-button>
-          </div>
-      </div>
-    </div>
-  </wxc-navpage>
+    </wxc-navpage>
+  </div>
 </template>
 <style>
   .page-body {
@@ -45,7 +47,7 @@
     created() {
       let bundleUrl = this.$getConfig().bundleUrl;
       let base = helper.getBaseUrl(bundleUrl, true);
-      this.loginURL = base + 'index.js';
+      this.loginURL = base + 'login.js';
     },
     methods: {
       submit() {

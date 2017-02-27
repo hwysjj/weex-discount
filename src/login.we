@@ -1,0 +1,144 @@
+<template>
+  <div style="font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;">
+    <wxc-navpage background-color="#4FC143" title="Login" title-color="#ffffff">
+      <div class="page-body">
+        <header></header>
+        <wxc-tip type="danger" if="{{error}}" value="{{error}}"></wxc-tip>      
+        <div class="section">
+            <div class="input-container">
+              <input class="input" type="text" oninput="onFNameInput" placeholder="first name">
+            </div>
+            <text>.</text>
+            <div class="input-container">
+              <input class="input" type="text" oninput="onLNameInput" placeholder="last name">
+            </div>
+            <text class="email-text">@greendotcorp.com</text>
+        </div>
+        <div class="section">
+          <div class="input-container">
+            <input class="input" type="password" oninput="onPassInput" placeholder="password">
+          </div>
+        </div>
+        <div class="btn-area">
+          <div class="section">
+            <wxc-button class="button" type="success" size="large" onclick="submit" value="Login"></wxc-button>
+          </div>
+          <div class="section">
+            <a href="{{registrationSrc}}">
+              <text class="link-text">Registration</text>
+            </a>
+          </div>
+        </div>
+      </div>
+    </wxc-navpage>
+  </div>
+</template>
+
+<style>
+  .page-body {
+    padding-left: 30;
+    padding-right: 30;
+  }
+  .section {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30;
+  }
+  .input {
+    padding-left: 30;
+    padding-right: 30;
+    height: 80;
+    font-size: 30;
+  }
+  .input-container {
+    border-bottom-width: 1;
+    border-bottom-color: #dddddd;
+    border-bottom-style: solid;
+    flex: 1;
+  }
+  .email-text, .link-text {
+    opacity: 0.4;
+  }
+  .button {
+    flex: 1;
+  }
+  .btn-area {
+    margin-top: 60;
+  }
+</style>
+
+<script>
+  require('weex-components');
+  const helper = require('./common/helper');
+  const errors = require('./common/errors');
+  const navigator = require('@weex-module/navigator');
+  const modal = require('@weex-module/modal');
+  const api = require('./common/services');  
+  const storage = require('@weex-module/storage');
+  module.exports = {
+    data: {
+      firstName: null,
+      lastName: '',
+      registrationSrc: null,
+      password: null,
+      error: null,
+      base: null
+    },
+    created() {
+      let bundleUrl = this.$getConfig().bundleUrl;
+      this.base = helper.getBaseUrl(bundleUrl, true);
+      this.registrationSrc = this.base + 'registration.js';
+    },
+    computed: {
+      email: {
+        get() {
+          return `${this.firstName}.${this.lastName}@greendotcorp.com`;
+        }
+      }
+    },
+    methods: {
+      onFNameInput(event) {
+        this.firstName = event.value;
+      },
+      onLNameInput(event) {
+        this.lastName = event.value;
+      },
+      onPassInput(event) {
+        this.password = event.value;
+      },
+      submit() {
+        let self = this;
+        if (!helper.EmailReg.test(self.email)) {
+          self.error = errors.error.Name_Invalid;
+          return;
+        } else if (!self.password) {
+          self.error = errors.error.Password_Required;
+          return;
+        } else {
+          self.error = null;
+          api.login(self.email, self.password)
+            .then(res => {
+              let url = res.data.emailConfirmed === 'True' ? 'index.js' : 'first-login-modal.js'
+              let params = {
+                'url': this.base + url,
+                'animated' : 'true',
+              };
+              let authorizationData = { 
+                token: res.data.access_token, 
+                userName: res.data.userName, 
+                refreshToken: res.data.refresh_token, 
+              };
+              storage.setItem('authorizationData', JSON.stringify(authorizationData), e => {
+                console.log('sss'+JSON.stringify(e));
+                navigator.push(params, () => {});
+              });
+            })
+            .catch(res => {
+              self.error = 'Login failed, please check your inputs and try again';
+            });
+        }
+      }
+    }
+  }
+</script>
