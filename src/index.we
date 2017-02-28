@@ -1,5 +1,5 @@
 <template>
-    <div style="font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;">
+    <div style="font-family: Arial;">
         <div class="dashboard-header">
             <image class="logo" src="https://raw.githubusercontent.com/hwysjj/weex-discount/master/src/images/GreenDot_Shanghai-Logo-small.png"></image>
             <div>
@@ -24,7 +24,7 @@
                             <text class="merchant-position">{{description}}</text>
                         </div>
                         <div class="pay">
-                            <text class="pay-text">pay</text>
+                            <text class="pay-text"></text>
                         </div>
                     </div>
                 </cell>
@@ -51,7 +51,7 @@
         height: 90;
     }
     .hero {
-        background-color: #4FC143;
+        background-color: #009A16;
         justify-content: center;
         align-items: center;
         height: 340;
@@ -67,7 +67,7 @@
     }
     .header-text-container {
         width: 400;
-        border-top-width: 6;
+        border-top-width: 4;
         border-top-color: #ffffff;
         text-align: center;
     }
@@ -77,8 +77,8 @@
     }
     .item {
         flex-direction: row;
-        border-bottom-width: 6;
-        border-bottom-color: #c0c0c0;
+        border-bottom-width: 3;
+        border-bottom-color: #e0e0e0;
         height: 180;
         align-items: center;
     }
